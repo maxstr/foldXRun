@@ -1,0 +1,3 @@
+[submodule "protAlign"]
+	path = protAlign
+	url = https://github.com/maxstr/protAlign
