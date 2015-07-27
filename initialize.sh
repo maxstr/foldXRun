@@ -18,5 +18,4 @@ rm -rf virtualenv-$VERSION
 $INITIAL_ENV/bin/pip install virtualenv-$VERSION.tar.gz
 source $INITIAL_ENV/bin/activate
 pip install -r requirements.txt
-cd protAlign
-source initialize.sh
+pip install -r protAlign/requirements.txt
