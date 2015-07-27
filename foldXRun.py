@@ -118,12 +118,13 @@ def foldXRun(seqDirectory, mutDirectory, nativePDB, foldXPath = '.', outputDir =
         with open(join(scratchDir, 'stabilizeRunFile.txt'), 'w') as stabilize:
             repair.write(repairRunFileText)
             stabilize.write(stabilizeRunFileText)
-    with lcd(scratchDir), hide('everything'):
-        print "Running repair job."
-        local("%s -runfile repairRunFile.txt" % foldXPath)
-        print "Running stabilize job."
-        local("%s -runfile stabilizeRunFile.txt" % foldXPath)
-        print "Done~"
+    with lcd(scratchDir):
+        with hide('everything'):
+            print "Running repair job."
+            local("%s -runfile repairRunFile.txt" % foldXPath)
+            print "Running stabilize job."
+            local("%s -runfile stabilizeRunFile.txt" % foldXPath)
+            print "Done~"
 
     print results
     print "FoldX Complete - Now running analysis on output"
