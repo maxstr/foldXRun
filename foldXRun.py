@@ -1,10 +1,13 @@
+#!/usr/bin/env python
 from fabric.api import local, env, settings, lcd, hide
 import re
 from tempfile import mkdtemp
 from shutil import rmtree, copy
-from os.path import isfile, join, normpath, exists, abspath, dirname
+from os.path import isfile, join, normpath, exists, abspath, dirname, basename
 import sys
 from os import listdir, makedirs
+import numpy
+import csv
 
 defaultOptions = """\
 <OPTIONS>FOLDX_optionfile;
@@ -103,7 +106,7 @@ def foldXRun(seqDirectory, mutDirectory, nativePDB, foldXPath = '.', outputDir =
 
     # Setup stabilize commands
 
-    stabilizeCommand = "<Stability>%s;" % join(dataDir, 'report.txt')
+    stabilizeCommand = "<Stability>%s;" % join(dataDir, 'energyOutput.txt')
     stabilizeDict['commandsString'] = stabilizeCommand
 
     # Finalize stabilize job.
@@ -114,17 +117,97 @@ def foldXRun(seqDirectory, mutDirectory, nativePDB, foldXPath = '.', outputDir =
     with open(join(scratchDir, 'repairRunFile.txt'), 'w') as repair, open(join(scratchDir, 'stabilizeRunFile.txt'), 'w') as stabilize:
         repair.write(repairRunFileText)
         stabilize.write(stabilizeRunFileText)
-    with lcd(scratchDir), hide('running'):
+    with lcd(scratchDir), hide('everything'):
+        print "Running repair job."
         local("%s -runfile repairRunFile.txt" % foldXPath)
+        print "Running stabilize job."
         local("%s -runfile stabilizeRunFile.txt" % foldXPath)
         print "Done~"
 
     print results
+    print "FoldX Complete - Now running analysis on output"
+    reportAnalyze(join(dataDir, 'energyOutput.txt'), join(dataDir, 'report.txt'), basename(normpath(seqDirectory)))
+
+def reportAnalyze(reportPath, outputPath, reportName):
+    native = None
+    seqs = []
+    muts = []
+    seqsSTDs = {}
+    mutsSTDs = {}
+    seqsMeans = {}
+    mutsMeans = {}
+    # Reading in values from the Stabilized report
+    with open(reportPath, 'r') as f:
+        for i in range(8):
+            f.readline()
+        reader = csv.DictReader(f, delimiter='\t')
+        for row in reader:
+            if re.match(".*mut", row['']):
+               muts.append(row)
+            elif re.match(".*seq", row['']):
+                seqs.append(row)
+            else:
+                native = row
+
+    # Python is really bad!!
+    for i in seqs:
+        i['name'] = i['']
+        del i['']
+    for i in muts:
+        i['name'] = i['']
+        del i['']
+    native['name'] = native['']
+    del native['']
+
+    # Calculate means, stds for each value
+    for key in seqs[0]:
+        # We don't want stats on these!
+        if key in ('name', 'Number of Residues'):
+            continue
+        seqsList = [float(d[key]) for d in seqs]
+        mutsList = [float(d[key]) for d in muts]
+
+        seqsSTDs[key] = numpy.std(seqsList)
+        mutsSTDs[key] = numpy.std(mutsList)
+        seqsMeans[key] = numpy.mean(seqsList)
+        mutsMeans[key] = numpy.mean(mutsList)
+
+    # We have our results, now let's write them prettily.
+    with open(outputPath, 'w') as f:
+
+
+        # First generate a list of lines we are going to write to the file.
+        lines = []
+        lines.append("""\
+Analysis Output for %s\n\n""" % reportName)
+        lines.append("Mutant Predicted Data:\n\n")
+        for key in mutsSTDs:
+            lines.append("%s Mean: %f\n" % (key, mutsMeans[key]))
+            lines.append("%s STD: %f\n" % (key, mutsSTDs[key]))
+        lines.append("\n\n")
+        lines.append("WT Predicted Data:\n\n")
+        for key in mutsSTDs:
+            lines.append("%s Mean: %f\n" % (key, seqsMeans[key]))
+            lines.append("%s STD: %f\n" % (key, seqsSTDs[key]))
+        lines.append("\n\n")
+        lines.append("WT Experimental Data:\n\n")
+        # We want to print the same data, but there are obviously not means or STD deviations for our single native protein.
+        for key in mutsSTDs:
+            lines.append("%s: %s\n" % (key, native[key]))
+
+        # Now write!
+        f.writelines(lines)
 
 
 
 if __name__ == '__main__':
-    print sys.argv
-    foldXRun(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+    try:
+        foldXRun(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+    except:
+        print """\
+Incorrect number of arguments entered!
+Usage: ./foldXRun.py seqsDir mutsDir nativePDB pathToFoldX outputDir\n"""
+        sys.exit(0)
+
 
 

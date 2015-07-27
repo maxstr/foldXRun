@@ -1,0 +1,122 @@
+Analysis Output for test
+
+Mutant Predicted Data:
+
+Electrostatics Mean: -3.393830
+Electrostatics STD: 0.000000
+backbone clash Mean: 120.141000
+backbone clash STD: 0.000000
+electrostatic kon Mean: 0.000000
+electrostatic kon STD: 0.000000
+energy Ionisation Mean: 0.724658
+energy Ionisation STD: 0.000000
+torsional clash Mean: 14.612000
+torsional clash STD: 0.000000
+disulfide Mean: 0.000000
+disulfide STD: 0.000000
+Solvation Polar Mean: 293.999000
+Solvation Polar STD: 0.000000
+Van der Waals Mean: -220.988000
+Van der Waals STD: 0.000000
+total energy Mean: 106.767000
+total energy STD: 0.000000
+Solvation Hydrophobic Mean: -289.880000
+Solvation Hydrophobic STD: 0.000000
+entropy mainchain Mean: 319.965000
+entropy mainchain STD: 0.000000
+Van der Waals clashes Mean: 31.861600
+Van der Waals clashes STD: 0.000000
+cis_bond Mean: 0.000000
+cis_bond STD: 0.000000
+Backbone Hbond Mean: -112.228000
+Backbone Hbond STD: 0.000000
+mloop_entropy Mean: 0.000000
+mloop_entropy STD: 0.000000
+partial covalent bonds Mean: 0.000000
+partial covalent bonds STD: 0.000000
+Entropy Complex Mean: 0.000000
+Entropy Complex STD: 0.000000
+entropy sidechain Mean: 120.721000
+entropy sidechain STD: 0.000000
+sloop_entropy Mean: 0.000000
+sloop_entropy STD: 0.000000
+Sidechain Hbond Mean: -43.894600
+Sidechain Hbond STD: 0.000000
+water bridge Mean: 0.000000
+water bridge STD: 0.000000
+helix dipole Mean: -4.731500
+helix dipole STD: 0.000000
+
+
+WT Predicted Data:
+
+Electrostatics Mean: -5.068730
+Electrostatics STD: 0.000000
+backbone clash Mean: 121.701000
+backbone clash STD: 0.000000
+electrostatic kon Mean: 0.000000
+electrostatic kon STD: 0.000000
+energy Ionisation Mean: 0.681606
+energy Ionisation STD: 0.000000
+torsional clash Mean: 24.784800
+torsional clash STD: 0.000000
+disulfide Mean: 0.000000
+disulfide STD: 0.000000
+Solvation Polar Mean: 293.696000
+Solvation Polar STD: 0.000000
+Van der Waals Mean: -223.542000
+Van der Waals STD: 0.000000
+total energy Mean: 97.839900
+total energy STD: 0.000000
+Solvation Hydrophobic Mean: -293.730000
+Solvation Hydrophobic STD: 0.000000
+entropy mainchain Mean: 318.361000
+entropy mainchain STD: 0.000000
+Van der Waals clashes Mean: 27.883200
+Van der Waals clashes STD: 0.000000
+cis_bond Mean: 0.000000
+cis_bond STD: 0.000000
+Backbone Hbond Mean: -120.481000
+Backbone Hbond STD: 0.000000
+mloop_entropy Mean: 0.000000
+mloop_entropy STD: 0.000000
+partial covalent bonds Mean: 0.000000
+partial covalent bonds STD: 0.000000
+Entropy Complex Mean: 0.000000
+Entropy Complex STD: 0.000000
+entropy sidechain Mean: 128.355000
+entropy sidechain STD: 0.000000
+sloop_entropy Mean: 0.000000
+sloop_entropy STD: 0.000000
+Sidechain Hbond Mean: -50.084300
+Sidechain Hbond STD: 0.000000
+water bridge Mean: 0.000000
+water bridge STD: 0.000000
+helix dipole Mean: -3.015120
+helix dipole STD: 0.000000
+
+
+WT Experimental Data:
+
+Electrostatics: 0.410967
+backbone clash: 143.218
+electrostatic kon: 0.400123
+energy Ionisation: 1.1218
+torsional clash: 12.6622
+disulfide: 0
+Solvation Polar: 373.949
+Van der Waals: -265.867
+total energy: 103.127
+Solvation Hydrophobic: -342.315
+entropy mainchain: 337.58
+Van der Waals clashes: 51.6061
+cis_bond: 2.24811
+Backbone Hbond: -144.545
+mloop_entropy: 0
+partial covalent bonds: -24.232
+Entropy Complex: 0
+entropy sidechain: 133.028
+sloop_entropy: 0
+Sidechain Hbond: -26.9256
+water bridge: -1.43134
+helix dipole: -4.5633
