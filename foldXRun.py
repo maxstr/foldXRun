@@ -92,7 +92,7 @@ def foldXRun(seqDirectory, mutDirectory, nativePDB, foldXPath = '.', outputDir =
             repair.write(repairRunFileText)
             stabilize.write(stabilizeRunFileText)
     with lcd(scratchDir):
-#        with hide('everything'):
+        with hide('everything'):
             print "Running repair job."
             print repairJobPDBs
             for repairJobPDB in repairJobPDBs:
@@ -123,8 +123,6 @@ def reportAnalyze(reportPath, outputPath, reportName):
 
     
     reportFiles = [f for f in listdir(reportPath) if re.search(".*_ST.fxout", f) and isfile(join(reportPath, f))]
-    print reportPath
-    print reportFiles
 
     # Reading in values from the Stabilized report
     for reportFile in reportFiles:
@@ -147,10 +145,6 @@ def reportAnalyze(reportPath, outputPath, reportName):
 #        del i['']
 #    native['name'] = native['']
 #    del native['']
-
-    print seqs
-    print muts
-    print native
 
     # Calculate means, stds for each value
     for key in seqs[0]:
@@ -194,12 +188,13 @@ Analysis Output for %s\n\n""" % reportName)
 
 
 if __name__ == '__main__':
-    foldXRun(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
-#    except:
-#        print """\
-#Incorrect number of arguments entered!
-#Usage: ./foldXRun.py seqsDir mutsDir nativePDB pathToFoldX outputDir\n"""
-#        sys.exit(0)
+    try:
+	    foldXRun(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+    except:
+        print """\
+Incorrect number of arguments entered!
+Usage: ./foldXRun.py seqsDir mutsDir nativePDB pathToFoldX outputDir\n"""
+        sys.exit(0)
 
 
 
